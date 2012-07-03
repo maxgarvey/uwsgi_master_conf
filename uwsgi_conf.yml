@@ -1,0 +1,75 @@
+uwsgi:
+  #SOCKET STUFF
+  socket: 127.0.0.1:8080
+  #map-socket: 0:1,2,3 # workers 1,2,3 will respond to msgs on the first socket
+  #map-socket: 1:4,5    #in the conf, and 4 and 5 will respond on the second
+  #http-socket: 8080 #unneccesarily redundant
+  freebind: 1 #allows binding on non-existent network address
+  #chmod-socket: 666 #also chmod: set the permission of the socket
+  vacuum: 1
+
+  #PROCESS STUFF
+  master: 1 #enables a mastser uwsgi process
+  processes: 4
+  pidfile: /var/run/uwsgi.pid
+  no-orphans: 1
+
+  #HARAKIRI STUFF
+  harakiri: 45
+  harakiri-verbose: 1
+  #spooler-harakiri: 1 #works for spooler tasks
+  #mule-harakiri: 1 #for mule tasks
+
+  listen: 50 #sets the max length for the listen queue
+  max-vars: 50 #sets the max variables that a client can pass
+  #cgi-mode: 1 #sends cgi formatted msgs 
+  #daemonize: 1 #good to leave it off for debug
+
+  #USER STUFF
+  uid: uwsgi    #a user i made just for uwsgi
+  gid: uwsgi
+
+  #DIRECTORY/FILE STUFF
+  chdir: /home/maxgarvey/flask_stuff
+  protocol: uwsgi #don't set to http... i guess
+
+  #LOG STUFF
+  #logto: /home/maxgarvey/flask_stuff/uwsgi_log.log #good to have this off for debug
+
+  #MEMORY STUFF
+  buffer-size: 4096 #default buffer size 4096 bytes
+  memory-report: 1 #prints information about address space usage and RSS
+  limit-as: 210 #this one seems to break it too
+  max-requests: 5000
+
+  #PYTHON STUFF
+  enable-thread: 1 #allows threads in the app
+  single-interpreter: 1 #all the pyprocesses will be going through the same interpreter
+  virtualenv: /home/maxgarvey/flask_stuff/env
+  module: hello
+  callable: app
+  #plugins: python #this line gives an error when uncommented
+
+  #PROCESS NAME STUFF
+  #procname-prefix: __uwsgi__ #prepends to the process name in ps
+  auto-procname: 0 #automatically sets the processname to be something useful, defaults to yes
+  procname-prefix-spaced: __uwsgi__ #adds a space in between the prefix and the process name
+  procname-append: __flask__ #appends flask to the process name
+  procname: worker #sets the process name
+  procname-master: master #sets the process name of the master process
+
+  #EMPEROR STUFF
+  emperor: 1 #turns on emperor mode
+  emperor-tyrant: 1 #
+  #emperor-stats: 1 #alternately emperor-stats-server
+  #early-emperor: 1
+  #emperor-amqp-vhost: amqp_vhost #sets the virtualhost name in AMQP emperor mode
+  #emperor-amqp-username: amqp #user for amqp
+  #emperor-amqp-password: good #pass for amqp
+  #emperor-throttle: 100 #number of milliseconds to wait before each vassal's fork
+  #emperor-broodlord: 1 #
+  #vassals-start-hook: #a file to be executed when the emperor starts the vassals
+  #vassals-stop-hook: a file to be executed when the emperor stops the vassals
+
+  #UNKNOWN
+  #auto-snapshot
