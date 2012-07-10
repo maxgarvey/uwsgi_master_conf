@@ -59,11 +59,44 @@ uwsgi:
     #forks
   #vassals-stop-hook: a file to be executed when the emperor stops the vassals
 
+  #FASTROUTER STUFF
+  #fastrouter: #turns on the fastrouter load balancer, takes an address as
+    #its param
+  #fastrouter-use-cache: checks the uwsgi cache to get hostname:address
+    #mapping
+  #fastrouter-use-pattern: use a filesystem pattern to get hostname: address
+    #mapping
+  #fastrouter-use-base: #anotehr option
+  #fastrouter-events: #limits the max number of async events fastrouter can
+    #return in one cycle
+  #fastrouter-subscription-server: adds a subscription server to the fastrouter
+    #to build the hostname:address map.
+  #fastrouter-timeout: #sets the internal fastrouter timeout.
+
   #HARAKIRI STUFF
   harakiri: 45
   harakiri-verbose: 1
   #spooler-harakiri: 1 #works for spooler tasks
   #mule-harakiri: 1 #for mule tasks
+
+  #HTTP STUFF
+  #http: #enables the embedded http server router gateway loadbalance proxy
+  #http-var: #
+  #http-to: #
+  #http-use-cache: #
+  #http-use-base: #
+  #http-use-cluster: #
+  #http-events: #
+  #http-subscription-server: #
+  #http-timeout: #
+
+  #INFORMATIONAL STUFF
+  #dump-options: #prints all possible config options and exits
+  #show-config: #prints the current conf in .ini format
+  #print: #prints the string specified as a param upon loading the conf file
+  #version: #prints the version and then exits
+  #catch-exceptions: #prints the exception traceback in the browser rather
+    #than in the logfile.
 
   #LOG STUFF
   #logto: /home/maxgarvey/flask_stuff/uwsgi_log.log #good to have this off for 
@@ -122,10 +155,13 @@ uwsgi:
     #of threads specified as the param.
   #file-serve-mode: allows you to set the static serving mode. defaults to
     #sendfile. you can also do x-sendfile (httpd) or x-accel-redirect (nginx)
-
-  #SNMP STUFF
-  #snmp: enables an snmp server
-  #snmp-community: set the snmp community string
+  #env: allows us to set an environmental variable via the config. Example:
+    #DJANGO_SETTINGS_MODULE=mysite.settings
+  #loop: sets LoopEngine stuff?
+  #allowed-modifiers: #limits client access to just the modifiers specified
+    #as the param(s) here.
+  #remap-modifier: will set an incoming modifier to the modifier specified
+  #nagios: #do a nagios check.
 
   #QUEUE STUFF
   #queue: #turns on the queue system
@@ -133,6 +169,11 @@ uwsgi:
     #multiple of 4096
   #queue-store: #enable persistent store for the uwsgi queue
   queue-store-sync: #sets the frequency for queue persistent store
+
+  #PING STUFF
+  #ping: will ping a uwsgi server. if successful, process exits with status 
+    #code 0
+  #ping-timeout: #sets the ping time-out before failure
 
   #PROCESS NAME STUFF
   #procname-prefix: __uwsgi__ #prepends to the process name in ps
@@ -172,15 +213,39 @@ uwsgi:
     #of inactivity
   #mount: #allows mounting multiple applications in the same process.
   #grunt: #allows grunt processes
+  #worker-exec: allows us to bind a different executable to a worker process
+    #the executable is specified as a param
+  #attach-daemon: attaches an external process to the master process.
+    #commonly done for memcached
 
   #PYTHON STUFF
   enable-thread: 1 #allows threads in the app
   single-interpreter: 1 #all the pyprocesses will be going through the same 
     #interpreter
-  virtualenv: /home/uwsgi/flask_stuff/env
+  virtualenv: /home/uwsgi/flask_stuff/env #specify the virtual env you want
+    #to use, also acceptable are venv and pyhome and home, for this directive
   module: hello
   callable: app
   #plugins: python #this line gives an error when uncommented
+  #mode: allows us to pass a value into a program, accessible as var: 
+    #uwsgi.mode
+  #wsgi-file: #load the specified wsgi file
+  #eval: #evaluates the param as a wsgi entry point.
+  #test: #test if a module can be imported correctly
+  #pythonpath: #used to add a location to the python path, can be repeated
+    #many (up to 64) times; same as python-path and pp directives.
+  #pymodule-alias: #allows us to rename a function or module from the upper
+    #level
+  #pyargv: #converts the parameter(s) into sys.argv to the python modules
+  #optimize: #set the python optimization level?
+  #paste: #use paste.deploy to load a wsgi app
+  #ini-paste: #load a paste.deploy file in .ini format.
+  #ini-paste-logged: #load a paste.deploy file in .ini format.
+  #no-site: #disable the immport of python's site.py module
+
+  #SNMP STUFF
+  #snmp: enables an snmp server
+  #snmp-community: set the snmp community string
 
   #SOCKET STUFF
   socket: 127.0.0.1:8080
@@ -193,6 +258,8 @@ uwsgi:
   #socket-timeout #the timeout for all socket operations
   #shared-socket: #with this option, you can create a socket during early
     #startup and use after privileges drop or jailing.
+  #close-on-exec: #sets the close on exec flag for the socket being used.
+  #reuse-port: #allows multiple apps to bind on the same address.
 
   #SPOOLER STUFF
   #spooler: #turns on the spooler, takes the directory as a param
@@ -202,13 +269,19 @@ uwsgi:
   #no-server: #initialize the uwsgi server, exit after initialization
   #udp: #starts a udp server (useful for logging)
 
+  #UGREEN STUFF
+  #ugreen: #enables ugreen as suspend resume engine
+  #ugreen-stacksize: #sets the stack size for ugreen.
+
   #UNKNOWN
   #auto-snapshot
 
   #USER STUFF
   uid: uwsgi    #a user i made just for uwsgi
   gid: uwsgi
-  #master-as-root #the master process is run as root
+  #master-as-root: #the master process is run as root
+  #cgroup: runs the server in the group specified as a param
+  #cgroup-opt: sets the cgroup option
 
   #VHOST STUFF
   #vhost: #enable virtual hosting mode
