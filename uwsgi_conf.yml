@@ -9,75 +9,74 @@ uwsgi:
 
   #CLUSTER STUFF
   #cluster: #join a cluster.
+  #cluster-log: #logs a message to each node in the cluster's logfile
   #cluster-nodes: #gets a list of nodes in a cluster without joining
   #cluster reload: #gracefully reload a whole cluster
-  #cluster-log: #logs a message to each node in the cluster's logfile
 
   #CONFIG STUFF
-  #xml: #path to an xml config file to use
   #ini: #path to an ini config file to use
-  #yml: #path to a yml config file to use
   #json: #path to a json config file to use
   #ldap: #load the config from an ldap system
   #ldap-schema: #dump the ldap schema
   #ldap-schema-ldif: #dump the ldap schema in ldif format
+  #xml: #path to an xml config file to use
+  #yml: #path to a yml config file to use
 
   #DIRECTORY/FILE STUFF
-  chdir: /home/uwsgi/flask_stuff
-  #chdir2: #change to this directory after privileges drop
-  protocol: uwsgi #don't set to http... i guess
-  chroot: #changes the root apparent to uwsgi
   #binary-path: #if uwsgi is not in the system path, then specifying the path
     #here will let any subprocesses be run correctly.
+  chdir: /home/uwsgi/flask_stuff
+  #chdir2: #change to this directory after privileges drop
   #check-static: #specify a directory that should be checked for a file before
     #passing to a handler.
+  chroot: #changes the root apparent to uwsgi
+  protocol: uwsgi #don't set to http... i guess
+  #static-index: name of the file to use for index
   #static-map: #allows you to connect a path to a shorter path. Example:
     #static-map = /media=/var/www/django/contrib/admin/media
-  #static-index: name of the file to use for index
+  #touch-reload: #graceful reload uwsgi stack when a file/directory changes,
+    #takes a directory or file to watch for activity as a param
 
   #EMPEROR STUFF
   #early-emperor: #"starts the emperor before jailing and privileges drop"
   #emperor: 1 #turns on emperor mode, takes the vassals directory as a param
   #emperor-broodlord: #turns on broodlord mode... autoscaling when combined 
     #with zerg mode
-  #emperor-tyrant: 1 #checks file permissions and changes to that user to run 
-    #a given vassal
-  #emperor-stats: 1 #alternately emperor-stats-server
-  #early-emperor: 1
-  #emperor-amqp-vhost: amqp_vhost #sets the virtualhost name in AMQP emperor 
-    #mode
-  #emperor-amqp-username: amqp #user for amqp
-  #emperor-amqp-password: good #pass for amqp
-  #emperor-throttle: 100 #number of milliseconds to wait before each vassal's 
-    #fork
-  #emperor-broodlord: 1 #
-  #vassals-start-hook: #a file to be executed when the emperor starts the 
-    #vassals
   #emperor-stats: #turns on the uwsgi stats server, takes the socket/address 
     #as a param
   #emperor-throttle: #takes the number of milliseconds to wait before a vassal 
     #forks
+  #emperor-tyrant: 1 #checks file permissions and changes to that user to run 
+    #a given vassal
+  #emperor-amqp-password: good #pass for amqp
+  #emperor-throttle: 100 #number of milliseconds to wait before each vassal's 
+    #fork
+  #emperor-amqp-username: amqp #user for amqp
+  #emperor-amqp-vhost: amqp_vhost #sets the virtualhost name in AMQP emperor 
+    #mode
+  #vassals-start-hook: #a file to be executed when the emperor starts the 
+    #vassals
   #vassals-stop-hook: a file to be executed when the emperor stops the vassals
 
   #FASTROUTER STUFF
   #fastrouter: #turns on the fastrouter load balancer, takes an address as
     #its param
-  #fastrouter-use-cache: checks the uwsgi cache to get hostname:address
-    #mapping
-  #fastrouter-use-pattern: use a filesystem pattern to get hostname: address
-    #mapping
-  #fastrouter-use-base: #anotehr option
   #fastrouter-events: #limits the max number of async events fastrouter can
     #return in one cycle
   #fastrouter-subscription-server: adds a subscription server to the fastrouter
     #to build the hostname:address map.
   #fastrouter-timeout: #sets the internal fastrouter timeout.
+  #fastrouter-use-base: #anotehr option
+  #fastrouter-use-cache: checks the uwsgi cache to get hostname:address
+    #mapping
+  #fastrouter-use-pattern: use a filesystem pattern to get hostname: address
+    #mapping
 
   #HARAKIRI STUFF
   harakiri: 45
   harakiri-verbose: 1
-  #spooler-harakiri: 1 #works for spooler tasks
   #mule-harakiri: 1 #for mule tasks
+  #spooler-harakiri: 1 #works for spooler tasks
 
   #HTTP STUFF
   #http: #enables the embedded http server router gateway loadbalance proxy
@@ -91,77 +90,127 @@ uwsgi:
   #http-timeout: #
 
   #INFORMATIONAL STUFF
-  #dump-options: #prints all possible config options and exits
-  #show-config: #prints the current conf in .ini format
-  #print: #prints the string specified as a param upon loading the conf file
-  #version: #prints the version and then exits
   #catch-exceptions: #prints the exception traceback in the browser rather
     #than in the logfile.
+  #dump-options: #prints all possible config options and exits
+  #print: #prints the string specified as a param upon loading the conf file
+  #show-config: #prints the current conf in .ini format
+  #version: #prints the version and then exits
 
   #LOG STUFF
-  #logto: /home/maxgarvey/flask_stuff/uwsgi_log.log #good to have this off for 
-    #debug
   #disable-logging: turns off logging for each request, instead just errors 
     #and internal messages will be logged.
+  #logdate: #put the date in each log line
+  #logfile-chown: #chowns the logfile
+  #logto: /home/maxgarvey/flask_stuff/uwsgi_log.log #good to have this off for 
+    #debug
+  #log-big:
+  #log-master: #only the master process will log if this is set
+  #log-micros: #use microseconds resolution for response time logging
+  #log-sendfile:
+  #log-slow:
+  #log-syslog: #logs to syslog instead of a normal logfile
   #log-x-forwarded-for: #reports client ip when uwsgi run under multiple 
     #proxies
-  #logfile-chown: #chowns the logfile
-  #log-syslog: #logs to syslog instead of a normal logfile
-  #log-master: #only the master process will log if this is set
-  #logdate: #put the date in each log line
   #log-zerp: #log requests with size zero
-  #log-slow:
   #log-4xx:
   #log-5xx:
-  #log-big:
-  #log-sendfile:
-  #log-micros: #use microseconds resolution for response time logging
 
   #MEMORY STUFF
   buffer-size: 4096 #default buffer size 4096 bytes
-  memory-report: 1 #prints information about address space usage and RSS
   limit-as: 210 #this one seems to break it too
   max-requests: 5000
+  memory-report: 1 #prints information about address space usage and RSS
   #sharedarea: #allocates some low level shared memory takes the number of 
     #pages as a param
 
   #MISCELLANEOUS
-  listen: 50 #sets the max length for the listen queue
-  max-vars: 50 #sets the max variables that a client can pass
-  #cgi-mode: 1 #sends cgi formatted msgs 
-  #daemonize: 1 #good to leave it off for debug
+  #async: #enables async mode
   #exit-on-reload: #forces the entire uwsgi stack to terminate if a reload is 
     #requested
-  #no-defer-accept: #uwsgi doesn't accept requests until some data is sent by 
-    #the client, this flag changes that behavior
-  #touch-reload: #graceful reload uwsgi stack when a file/directory changes,
-    #takes a directory or file to watch for activity as a param
-  #limit-post: #limits the size of incoming http-requests, takes the number of
-    #bytes to the param specified here
-  #post-buffering: #uwsgi will save to disk any http body bigger than the limit
-    #specified as a param.
-  #post-buffering-bufsize: #sets the internal buffer size during post buffering
-  #cpu-affinity: #delegate which cpu you want it to run on
-  #upload-progress: #starts up the embedded upload progress. You can track
-    #progress via ajax on files in the directory specified as a param
-  #no-default-app: #if the app specified cannot be found, the default app will
-    #not be loaded.
-  #multicast: #allows multicast from third party plugins
-  #subscribe: #you can subscribe to a subscription server
-  #check-interval: #the master process does a periodic scan, you can specify
-    #the period here.
-  #async: #enables async mode
-  #threads: #enables threads for the workers, each worker will have the amount
-    #of threads specified as the param.
   #file-serve-mode: allows you to set the static serving mode. defaults to
     #sendfile. you can also do x-sendfile (httpd) or x-accel-redirect (nginx)
-  #env: allows us to set an environmental variable via the config. Example:
-    #DJANGO_SETTINGS_MODULE=mysite.settings
   #loop: sets LoopEngine stuff?
-  #allowed-modifiers: #limits client access to just the modifiers specified
-    #as the param(s) here.
-  #remap-modifier: will set an incoming modifier to the modifier specified
+  #multicast: #allows multicast from third party plugins
   #nagios: #do a nagios check.
+  #subscribe: #you can subscribe to a subscription server. address is the
+    #specified param.
+  #upload-progress: #starts up the embedded upload progress. You can track
+    #progress via ajax on files in the directory specified as a param
+
+  #PING STUFF
+  #ping: will ping a uwsgi server. if successful, process exits with status 
+    #code 0
+  #ping-timeout: #sets the ping time-out before failure
+
+  #PROCESS NAME STUFF
+  auto-procname: 0 #automatically sets the processname to be something useful, 
+    #defaults to yes
+  procname: worker #sets the process name
+  procname-append: __flask__ #appends flask to the process name
+  procname-master: master #sets the process name of the master process
+  #procname-prefix: __uwsgi__ #prepends to the process name in ps
+  procname-prefix-spaced: __uwsgi__ #adds a space in between the prefix and the 
+    #process name
+
+  #PROCESS STUFF
+  #attach-daemon: attaches an external process to the master process.
+    #commonly done for memcached
+  #cheap: #workers don't start up until afterh the first request
+  #cheaper: #does the same as cheap, additionally, does some adaptive process
+    #spawning
+  #evil-reload-on-as: #reload a worker when its address space usage is over the 
+    #limit, takes memory limit as param (in mb)
+  #evil-reload-on-rss: #same as evil-reload-on-as except for physical unshared 
+    #memory
+  #grunt: #allows grunt processes
+  #idle: #destroys workers after a number of seconds (specified as the param)
+    #of inactivity
+  #lazy: #loads applications after each worker's fork
+  locks: #takes the number locks to create as its param
+  master: 1 #enables a mastser uwsgi process
+  #mount: #allows mounting multiple applications in the same process.
+  mule: #add a mule process...
+  no-orphans: 1
+  pidfile: /var/run/uwsgi.pid
+  #pidfile2: writes the pidfile here after privileges drop
+  #prio: sets the process priority to the number specified as a param
+  processes: 4
+  #reaper: #kills all (any) zombies after each request
+  reload-mercy: 10 #the max number of seconds to wait for worker death during 
+    #a graceful reload.
+  reload-on-as: 250 #recycle a worker when its address space usage is over the 
+    #limit, takes memory limit as param (in mb)
+  #reload-on-rss: #same as reload-on-as except for physical unshared memory
+  #threads: #enables threads for the workers, each worker will have the amount
+    #of threads specified as the param.
+  #worker-exec: allows us to bind a different executable to a worker process
+    #the executable is specified as a param
+
+  #PYTHON STUFF
+  callable: app
+  enable-thread: 1 #allows threads in the app
+  #eval: #evaluates the param as a wsgi entry point.
+  #ini-paste: #load a paste.deploy file in .ini format.
+  #ini-paste-logged: #load a paste.deploy file in .ini format.
+  #mode: allows us to pass a value into a program, accessible as var: 
+    #uwsgi.mode
+  module: hello
+  #no-site: #disable the immport of python's site.py module
+  #optimize: #set the python optimization level?
+  #paste: #use paste.deploy to load a wsgi app
+  #plugins: python #this line gives an error when uncommented
+  #pyargv: #converts the parameter(s) into sys.argv to the python modules
+  #pymodule-alias: #allows us to rename a function or module from the upper
+    #level
+  #pythonpath: #used to add a location to the python path, can be repeated
+    #many (up to 64) times; same as python-path and pp directives.
+  single-interpreter: 1 #all the pyprocesses will be going through the same 
+    #interpreter
+  #test: #test if a module can be imported correctly
+  virtualenv: /home/uwsgi/flask_stuff/env #specify the virtual env you want
+    #to use, also acceptable are venv and pyhome and home, for this directive
+  #wsgi-file: #load the specified wsgi file
 
   #QUEUE STUFF
   #queue: #turns on the queue system
@@ -170,96 +219,50 @@ uwsgi:
   #queue-store: #enable persistent store for the uwsgi queue
   queue-store-sync: #sets the frequency for queue persistent store
 
-  #PING STUFF
-  #ping: will ping a uwsgi server. if successful, process exits with status 
-    #code 0
-  #ping-timeout: #sets the ping time-out before failure
+  #REQUEST STUFF
+  #allowed-modifiers: #limits client access to just the modifiers specified
+    #as the param(s) here.
+  #limit-post: #limits the size of incoming http-requests, takes the number of
+    #bytes to the param specified here
+  listen: 50 #sets the max length for the listen queue
+  max-vars: 50 #sets the max variables that a client can pass
+  #no-defer-accept: #uwsgi doesn't accept requests until some data is sent by 
+    #the client, this flag changes that behavior
+  #post-buffering: #uwsgi will save to disk any http body bigger than the limit
+    #specified as a param.
+  #post-buffering-bufsize: #sets the internal buffer size during post buffering
+  #remap-modifier: will set an incoming modifier to the modifier specified
 
-  #PROCESS NAME STUFF
-  #procname-prefix: __uwsgi__ #prepends to the process name in ps
-  auto-procname: 0 #automatically sets the processname to be something useful, 
-    #defaults to yes
-  procname-prefix-spaced: __uwsgi__ #adds a space in between the prefix and the 
-    #process name
-  procname-append: __flask__ #appends flask to the process name
-  procname: worker #sets the process name
-  procname-master: master #sets the process name of the master process
+  #RESPONSE STUFF
+  #cgi-mode: 1 #sends cgi formatted msgs 
 
-  #PROCESS STUFF
-  master: 1 #enables a mastser uwsgi process
-  processes: 4
-  pidfile: /var/run/uwsgi.pid
-  #pidfile2: writes the pidfile here after privileges drop
-  no-orphans: 1
-  reload-mercy: 10 #the max number of seconds to wait for worker death during 
-    #a graceful reload.
-  #reaper: #kills all (any) zombies after each request
-  locks: #takes the number locks to create as its param
-  mule: #add a mule process...
-  reload-on-as: 250 #recycle a worker when its address space usage is over the 
-    #limit, takes memory limit as param (in mb)
-  #reload-on-rss: #same as reload-on-as except for physical unshared memory
-  #evil-reload-on-as: #reload a worker when its address space usage is over the 
-    #limit, takes memory limit as param (in mb)
-  #evil-reload-on-rss: #same as evil-reload-on-as except for physical unshared 
-    #memory
-  #no-orphans: #automatically kill workers with no master process
-  #prio: sets the process priority to the number specified as a param
-  #lazy: #loads applications after each worker's fork
-  #cheap: #workers don't start up until afterh the first request
-  #cheaper: #does the same as cheap, additionally, does some adaptive process
-    #spawning
-  #idle: #destroys workers after a number of seconds (specified as the param)
-    #of inactivity
-  #mount: #allows mounting multiple applications in the same process.
-  #grunt: #allows grunt processes
-  #worker-exec: allows us to bind a different executable to a worker process
-    #the executable is specified as a param
-  #attach-daemon: attaches an external process to the master process.
-    #commonly done for memcached
-
-  #PYTHON STUFF
-  enable-thread: 1 #allows threads in the app
-  single-interpreter: 1 #all the pyprocesses will be going through the same 
-    #interpreter
-  virtualenv: /home/uwsgi/flask_stuff/env #specify the virtual env you want
-    #to use, also acceptable are venv and pyhome and home, for this directive
-  module: hello
-  callable: app
-  #plugins: python #this line gives an error when uncommented
-  #mode: allows us to pass a value into a program, accessible as var: 
-    #uwsgi.mode
-  #wsgi-file: #load the specified wsgi file
-  #eval: #evaluates the param as a wsgi entry point.
-  #test: #test if a module can be imported correctly
-  #pythonpath: #used to add a location to the python path, can be repeated
-    #many (up to 64) times; same as python-path and pp directives.
-  #pymodule-alias: #allows us to rename a function or module from the upper
-    #level
-  #pyargv: #converts the parameter(s) into sys.argv to the python modules
-  #optimize: #set the python optimization level?
-  #paste: #use paste.deploy to load a wsgi app
-  #ini-paste: #load a paste.deploy file in .ini format.
-  #ini-paste-logged: #load a paste.deploy file in .ini format.
-  #no-site: #disable the immport of python's site.py module
+  #RUN STUFF
+  #check-interval: #the master process does a periodic scan, you can specify
+    #the period here.
+  #cpu-affinity: #delegate which cpu you want it to run on
+  #daemonize: 1 #good to leave it off for debug
+  #env: allows us to set an environmental variable via the config. Example:
+    #DJANGO_SETTINGS_MODULE=mysite.settings
+  #no-default-app: #if the app specified cannot be found, the default app will
+    #not be loaded.
 
   #SNMP STUFF
   #snmp: enables an snmp server
   #snmp-community: set the snmp community string
 
   #SOCKET STUFF
-  socket: 127.0.0.1:8080
+  #chmod-socket: 666 #also chmod: set the permission of the socket
+  #close-on-exec: #sets the close on exec flag for the socket being used.
+  freebind: 1 #allows binding on non-existent network address
+  #http-socket: 8080 #unneccesarily redundant
   #map-socket: 0:1,2,3 # workers 1,2,3 will respond to msgs on the first socket
   #map-socket: 1:4,5    #in the conf, and 4 and 5 will respond on the second
-  #http-socket: 8080 #unneccesarily redundant
-  freebind: 1 #allows binding on non-existent network address
-  #chmod-socket: 666 #also chmod: set the permission of the socket
-  vacuum: 1
-  #socket-timeout #the timeout for all socket operations
-  #shared-socket: #with this option, you can create a socket during early
-    #startup and use after privileges drop or jailing.
-  #close-on-exec: #sets the close on exec flag for the socket being used.
   #reuse-port: #allows multiple apps to bind on the same address.
+  #shared-socket: #with this option, you can create a socket during early
+  socket: 127.0.0.1:8080
+  #socket-timeout #the timeout for all socket operations
+  vacuum: 1
+    #startup and use after privileges drop or jailing.
 
   #SPOOLER STUFF
   #spooler: #turns on the spooler, takes the directory as a param
@@ -277,11 +280,11 @@ uwsgi:
   #auto-snapshot
 
   #USER STUFF
-  uid: uwsgi    #a user i made just for uwsgi
-  gid: uwsgi
-  #master-as-root: #the master process is run as root
   #cgroup: runs the server in the group specified as a param
   #cgroup-opt: sets the cgroup option
+  gid: uwsgi
+  #master-as-root: #the master process is run as root
+  uid: uwsgi    #a user i made just for uwsgi
 
   #VHOST STUFF
   #vhost: #enable virtual hosting mode
